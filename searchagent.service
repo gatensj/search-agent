@@ -1,0 +1,17 @@
+# Phase 2 deployment: /etc/systemd/system/searchagent.service on the droplet
+#   sudo systemctl daemon-reload && sudo systemctl enable --now searchagent
+[Unit]
+Description=Claude search agent Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_USER
+WorkingDirectory=/home/YOUR_USER/search-agent
+ExecStart=/home/YOUR_USER/search-agent/.venv/bin/python bot.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
